@@ -1,0 +1,71 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            Holidays Portfolio
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" slot="fixed">
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">Blank</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-card *ngIf="countries">
+        <ion-card-header>
+            <ion-card-subtitle>Selected Country</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+            <ion-select [(ngModel)]="selectedCountry" name="selectCountry" multiple="false"
+                        [placeholder]="selectedCountry ? selectedCountry : 'Tap to select..'"
+                        (ionChange)="onComboboxSelect()" required>
+                <ion-select-option *ngFor="let country of countries" value="{{country.name}}">
+                    {{country.name}}
+                </ion-select-option>
+            </ion-select>
+        </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="years">
+        <ion-card-header>
+            <ion-card-subtitle>Selected Year</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-select [(ngModel)]="selectedYear" name="selectedYear" multiple="false"
+                        [placeholder]="selectedYear ? selectedYear : 'Tap to select..'"
+                        (ionChange)="onComboboxSelect()" required>
+                <ion-select-option *ngFor="let year of years" value="{{year.id}}">
+                    {{year.name}}
+                </ion-select-option>
+            </ion-select>
+        </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="isLoading">
+        <ion-card-header>
+            <ion-card-subtitle>Loading..</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+            ...
+        </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="!isLoading && loadedHolidays.length == 0">
+        <ion-card-header>
+            <ion-card-subtitle> NO DATA LOADED</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+            ...
+        </ion-card-content>
+    </ion-card>
+    <ng-container *ngIf="loadedHolidays.length != 0">
+        <ion-card *ngFor="let loadedHoliday of loadedHolidays">
+            <ion-card-header>
+                <ion-card-subtitle>{{loadedHoliday.name}}</ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+                {{loadedHoliday.date}}
+            </ion-card-content>
+        </ion-card>
+    </ng-container>
+</ion-content>
